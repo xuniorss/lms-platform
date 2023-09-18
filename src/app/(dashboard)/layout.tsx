@@ -12,7 +12,7 @@ export default function DashboardLayout({ children }: { children: ReactNode }) {
 			<aside className="fixed inset-y-0 z-50 hidden h-full w-56 flex-col md:flex">
 				<Sidebar />
 			</aside>
-			<main className="md:pl-56">{children}</main>
+			<main className="h-full pt-[5rem] md:pl-56">{children}</main>
 		</section>
 	)
 }
