@@ -3,6 +3,7 @@ import { prismadb } from '@/lib/prismadb'
 import { auth } from '@clerk/nextjs'
 import { LayoutDashboard } from 'lucide-react'
 import { redirect } from 'next/navigation'
+import { DescriptionForm } from './_components/description-form'
 import { TitleForm } from './_components/title-form'
 
 export default async function CourseIdPage({
@@ -50,6 +51,7 @@ export default async function CourseIdPage({
 						<h2 className="text-xl">Personalize seu curso</h2>
 					</div>
 					<TitleForm initialData={course} courseId={course.id} />
+					<DescriptionForm initialData={course} courseId={course.id} />
 				</div>
 			</section>
 		</section>
