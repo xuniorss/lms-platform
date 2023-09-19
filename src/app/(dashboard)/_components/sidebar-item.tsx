@@ -26,7 +26,7 @@ export const SidebarItem = memo(
 				aria-label={`button ${label}`}
 				aria-current={isActive ? 'page' : undefined}
 				className={cn(
-					'flex items-center gap-x-2 pl-6 text-sm font-[500] text-slate-500 transition-all hover:bg-slate-300/20 hover:text-slate-600',
+					'flex items-center gap-x-2 pl-6 text-sm font-medium text-slate-500 transition-all hover:bg-slate-300/20 hover:text-slate-600',
 					isActive &&
 						'bg-sky-200/20 text-sky-700 hover:bg-sky-200/20 hover:text-sky-700',
 				)}
