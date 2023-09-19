@@ -13,6 +13,7 @@ import {
 import { Input } from '@/components/ui/input'
 import { CreateCourseProps, CreateCourseSchema } from '@/models/create-course'
 import { zodResolver } from '@hookform/resolvers/zod'
+import { Course } from '@prisma/client'
 import axios from 'axios'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
@@ -31,8 +32,9 @@ export default function CreatePage() {
 
 	const onSubmit: SubmitHandler<CreateCourseProps> = async (values) => {
 		try {
-			const { data } = await axios.post('/api/course', values)
-			router.push(`/teacher/course/${data.id}`)
+			const { data } = await axios.post<Course>('/api/courses', values)
+			router.push(`/teacher/courses/${data.id}`)
+			toast.success('Curso criado')
 		} catch (error) {
 			toast.error('Algo deu errado')
 		}
@@ -74,7 +76,11 @@ export default function CreatePage() {
 
 						<div className="flex items-center gap-x-2">
 							<Link href="/">
-								<Button type="button" variant="ghost">
+								<Button
+									disabled={isSubmitting}
+									type="button"
+									variant="ghost"
+								>
 									Cancelar
 								</Button>
 							</Link>
