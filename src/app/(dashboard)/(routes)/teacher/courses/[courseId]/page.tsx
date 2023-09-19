@@ -3,6 +3,7 @@ import { prismadb } from '@/lib/prismadb'
 import { auth } from '@clerk/nextjs'
 import { LayoutDashboard } from 'lucide-react'
 import { redirect } from 'next/navigation'
+import { TitleForm } from './_components/title-form'
 
 export default async function CourseIdPage({
 	params,
@@ -48,6 +49,7 @@ export default async function CourseIdPage({
 						<IconBadge icon={LayoutDashboard} />
 						<h2 className="text-xl">Personalize seu curso</h2>
 					</div>
+					<TitleForm initialData={course} courseId={course.id} />
 				</div>
 			</section>
 		</section>
