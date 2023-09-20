@@ -1,12 +1,13 @@
 import { IconBadge } from '@/components/IconBadge'
 import { prismadb } from '@/lib/prismadb'
 import { auth } from '@clerk/nextjs'
-import { LayoutDashboard } from 'lucide-react'
+import { CircleDollarSign, LayoutDashboard, ListChecks } from 'lucide-react'
 import { redirect } from 'next/navigation'
 
 import { CategoryForm } from './_components/category-form'
 import { DescriptionForm } from './_components/description-form'
 import { ImageForm } from './_components/image-form'
+import { PriceForm } from './_components/price-form'
 import { TitleForm } from './_components/title-form'
 
 export default async function CourseIdPage({
@@ -68,6 +69,22 @@ export default async function CourseIdPage({
 							value: category.id,
 						}))}
 					/>
+				</div>
+				<div className="space-y-6">
+					<section>
+						<div className="flex items-center gap-x-2">
+							<IconBadge icon={ListChecks} />
+							<h2 className="text-xl">Capítulos do curso</h2>
+						</div>
+						{/* <div>TODO: Chapters</div> */}
+					</section>
+					<section>
+						<div className="flex items-center gap-x-2">
+							<IconBadge icon={CircleDollarSign} />
+							<h2 className="text-xl">Venda seu curso</h2>
+						</div>
+						<PriceForm initialData={course} courseId={course.id} />
+					</section>
 				</div>
 			</section>
 		</section>
