@@ -3,6 +3,8 @@ import { prismadb } from '@/lib/prismadb'
 import { auth } from '@clerk/nextjs'
 import { LayoutDashboard } from 'lucide-react'
 import { redirect } from 'next/navigation'
+
+import { CategoryForm } from './_components/category-form'
 import { DescriptionForm } from './_components/description-form'
 import { ImageForm } from './_components/image-form'
 import { TitleForm } from './_components/title-form'
@@ -18,6 +20,10 @@ export default async function CourseIdPage({
 
 	const course = await prismadb.course.findUnique({
 		where: { id: params.courseId },
+	})
+
+	const categories = await prismadb.category.findMany({
+		orderBy: { name: 'asc' },
 	})
 
 	if (!course) return redirect('/')
@@ -54,6 +60,14 @@ export default async function CourseIdPage({
 					<TitleForm initialData={course} courseId={course.id} />
 					<DescriptionForm initialData={course} courseId={course.id} />
 					<ImageForm initialData={course} courseId={course.id} />
+					<CategoryForm
+						initialData={course}
+						courseId={course.id}
+						options={categories.map((category) => ({
+							label: category.name,
+							value: category.id,
+						}))}
+					/>
 				</div>
 			</section>
 		</section>
