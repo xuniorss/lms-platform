@@ -11,6 +11,7 @@ import { redirect } from 'next/navigation'
 
 import { AttachmentForm } from './_components/attachment-form'
 import { CategoryForm } from './_components/category-form'
+import { ChaptersForm } from './_components/chapters-form'
 import { DescriptionForm } from './_components/description-form'
 import { ImageForm } from './_components/image-form'
 import { PriceForm } from './_components/price-form'
@@ -27,7 +28,10 @@ export default async function CourseIdPage({
 
 	const course = await prismadb.course.findUnique({
 		where: { id: params.courseId },
-		include: { attachments: { orderBy: { createdAt: 'desc' } } },
+		include: {
+			chapters: { orderBy: { position: 'asc' } },
+			attachments: { orderBy: { createdAt: 'desc' } },
+		},
 	})
 
 	const categories = await prismadb.category.findMany({
@@ -42,6 +46,7 @@ export default async function CourseIdPage({
 		course.imageUrl,
 		course.price,
 		course.categoryId,
+		course.chapters.some((chapter) => chapter.isPublished),
 	]
 
 	const totalFields = requiredFields.length
@@ -83,7 +88,7 @@ export default async function CourseIdPage({
 							<IconBadge icon={ListChecks} />
 							<h2 className="text-xl">Capítulos do curso</h2>
 						</div>
-						{/* <div>TODO: Chapters</div> */}
+						<ChaptersForm initialData={course} courseId={course.id} />
 					</section>
 					<section>
 						<div className="flex items-center gap-x-2">
