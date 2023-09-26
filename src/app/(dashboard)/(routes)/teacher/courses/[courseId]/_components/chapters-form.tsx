@@ -20,8 +20,7 @@ import {
 } from '@/components/ui/form'
 import { Input } from '@/components/ui/input'
 import { cn } from '@/lib/utils'
-
-// import { ChaptersList } from './chapters-list'
+import { ChaptersList } from './chapters-list'
 
 interface ChaptersFormProps {
 	initialData: Course & { chapters: Chapter[] }
@@ -54,11 +53,11 @@ export const ChaptersForm = ({ initialData, courseId }: ChaptersFormProps) => {
 	const onSubmit = async (values: z.infer<typeof formSchema>) => {
 		try {
 			await axios.post(`/api/courses/${courseId}/chapters`, values)
-			toast.success('Chapter created')
+			toast.success('Capítulo criado')
 			toggleCreating()
 			router.refresh()
 		} catch {
-			toast.error('Something went wrong')
+			toast.error('Algo deu errado')
 		}
 	}
 
@@ -69,10 +68,10 @@ export const ChaptersForm = ({ initialData, courseId }: ChaptersFormProps) => {
 			await axios.put(`/api/courses/${courseId}/chapters/reorder`, {
 				list: updateData,
 			})
-			toast.success('Chapters reordered')
+			toast.success('Capítulos reordenados')
 			router.refresh()
 		} catch {
-			toast.error('Something went wrong')
+			toast.error('Algo deu errado')
 		} finally {
 			setIsUpdating(false)
 		}
@@ -138,11 +137,11 @@ export const ChaptersForm = ({ initialData, courseId }: ChaptersFormProps) => {
 					)}
 				>
 					{!initialData.chapters.length && 'Sem capítulos'}
-					{/* <ChaptersList
+					<ChaptersList
 						onEdit={onEdit}
 						onReorder={onReorder}
 						items={initialData.chapters || []}
-					/> */}
+					/>
 				</div>
 			)}
 			{!isCreating && (
