@@ -1,9 +1,15 @@
 import { IconBadge } from '@/components/IconBadge'
 import { prismadb } from '@/lib/prismadb'
 import { auth } from '@clerk/nextjs'
-import { CircleDollarSign, LayoutDashboard, ListChecks } from 'lucide-react'
+import {
+	CircleDollarSign,
+	File,
+	LayoutDashboard,
+	ListChecks,
+} from 'lucide-react'
 import { redirect } from 'next/navigation'
 
+import { AttachmentForm } from './_components/attachment-form'
 import { CategoryForm } from './_components/category-form'
 import { DescriptionForm } from './_components/description-form'
 import { ImageForm } from './_components/image-form'
@@ -21,6 +27,7 @@ export default async function CourseIdPage({
 
 	const course = await prismadb.course.findUnique({
 		where: { id: params.courseId },
+		include: { attachments: { orderBy: { createdAt: 'desc' } } },
 	})
 
 	const categories = await prismadb.category.findMany({
@@ -84,6 +91,13 @@ export default async function CourseIdPage({
 							<h2 className="text-xl">Venda seu curso</h2>
 						</div>
 						<PriceForm initialData={course} courseId={course.id} />
+					</section>
+					<section>
+						<div className="flex items-center gap-x-2">
+							<IconBadge icon={File} />
+							<h2 className="text-xl">Recursos & Anexos</h2>
+						</div>
+						<AttachmentForm initialData={course} courseId={course.id} />
 					</section>
 				</div>
 			</section>
