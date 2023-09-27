@@ -7,6 +7,7 @@ import { redirect } from 'next/navigation'
 import { ChapterAccessForm } from './_components/chapter-access-form'
 import { ChapterDescriptionForm } from './_components/chapter-description-form'
 import { ChapterTitleForm } from './_components/chapter-title-form'
+import { ChapterVideoForm } from './_components/chapter-video-form'
 
 export default async function ChapterIdPage({
 	params,
@@ -89,6 +90,11 @@ export default async function ChapterIdPage({
 						<IconBadge icon={Video} />
 						<h2 className="text-xl">Adicionar um vídeo</h2>
 					</div>
+					<ChapterVideoForm
+						initialData={chapter}
+						courseId={params.courseId}
+						chapterId={params.chapterId}
+					/>
 				</div>
 			</section>
 		</section>

@@ -1,6 +1,6 @@
 import { prismadb } from '@/lib/prismadb'
 import { auth } from '@clerk/nextjs'
-
+import Mux from '@mux/mux-node'
 import { NextResponse } from 'next/server'
 
 const { Video } = new Mux(
