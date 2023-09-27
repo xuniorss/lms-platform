@@ -11,16 +11,19 @@ import {
 	FormMessage,
 } from '@/components/ui/form'
 import { Input } from '@/components/ui/input'
+import { cn } from '@/lib/utils'
 import { CreateCourseProps, CreateCourseSchema } from '@/models/create-course'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { Course } from '@prisma/client'
 import axios from 'axios'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
+import { useState } from 'react'
 import { SubmitHandler, useForm } from 'react-hook-form'
 import toast from 'react-hot-toast'
 
 export default function CreatePage() {
+	const [isFocused, setIsFocused] = useState(false)
 	const router = useRouter()
 
 	const form = useForm<CreateCourseProps>({
@@ -59,11 +62,25 @@ export default function CreatePage() {
 							render={({ field }) => (
 								<FormItem>
 									<FormLabel>Título do curso</FormLabel>
-									<FormControl>
+									<FormControl
+										className={cn(
+											'relative',
+											isFocused ? 'w-full' : 'w-3/4',
+										)}
+									>
 										<Input
 											disabled={isSubmitting}
 											placeholder="e.g. 'Desenvolvimento web avançado'"
-											{...field}
+											onFocus={() => setIsFocused(true)}
+											onBlur={() => setIsFocused(false)}
+											ref={field.ref}
+											name={field.name}
+											value={field.value}
+											onChange={field.onChange}
+											className={cn(
+												'transition-all duration-300',
+												isFocused ? 'w-full' : 'w-3/4',
+											)}
 										/>
 									</FormControl>
 									<FormDescription>
