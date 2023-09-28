@@ -1,3 +1,4 @@
+import { ConfettiProvider } from '@/components/providers/confetti-provider'
 import { ToastProvider } from '@/components/providers/toaster-provider'
 import { cn } from '@/lib/utils'
 import { ClerkProvider } from '@clerk/nextjs'
@@ -18,6 +19,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
 		<ClerkProvider>
 			<html lang="pt-BR">
 				<body className={cn('antialiased', inter.className)}>
+					<ConfettiProvider />
 					<ToastProvider />
 					{children}
 				</body>
