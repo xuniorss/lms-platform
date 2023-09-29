@@ -6,6 +6,7 @@ import { auth } from '@clerk/nextjs'
 import { File } from 'lucide-react'
 import { redirect } from 'next/navigation'
 import { CourseEnrollButton } from './_components/course-enroll-button'
+import { CourseProgressButton } from './_components/course-progress-button'
 import { VideoPlayer } from './_components/video-player'
 
 export default async function ChapterIdPage({
@@ -68,14 +69,12 @@ export default async function ChapterIdPage({
 							{chapter.title}
 						</h2>
 						{purchase ? (
-							<>
-								{/*   <CourseProgressButton
-                          chapterId={params.chapterId}
-                          courseId={params.courseId}
-                          nextChapterId={nextChapter?.id}
-                          isCompleted={!!userProgress?.isCompleted}
-                        /> */}
-							</>
+							<CourseProgressButton
+								chapterId={params.chapterId}
+								courseId={params.courseId}
+								nextChapterId={nextChapter?.id}
+								isCompleted={!!userProgress?.isCompleted}
+							/>
 						) : (
 							<CourseEnrollButton
 								courseId={params.courseId}
