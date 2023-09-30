@@ -1,4 +1,5 @@
 import { prismadb } from '@/lib/prismadb'
+import { isTeacher } from '@/lib/teacher'
 import { auth } from '@clerk/nextjs'
 import Mux from '@mux/mux-node'
 import { NextResponse } from 'next/server'
@@ -15,7 +16,8 @@ export async function DELETE(
 	try {
 		const { userId } = auth()
 
-		if (!userId) return new NextResponse('Unauthorized', { status: 401 })
+		if (!userId || !isTeacher(userId))
+			return new NextResponse('Unauthorized', { status: 401 })
 
 		const course = await prismadb.course.findUnique({
 			where: { id: params.courseId, userId: userId },
@@ -48,7 +50,8 @@ export const PATCH = async (
 		const { userId } = auth()
 		const values = await req.json()
 
-		if (!userId) return new NextResponse('Unauthorized', { status: 401 })
+		if (!userId || !isTeacher(userId))
+			return new NextResponse('Unauthorized', { status: 401 })
 
 		const course = await prismadb.course.update({
 			where: { id: params.courseId, userId },
